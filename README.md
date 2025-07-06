@@ -1,11 +1,12 @@
 # 🎮 Avoidance Game
 
-A modern JavaScript/TypeScript migration of the classic Visual Basic 6.0 avoidance game, featuring authentic gameplay and original graphics.
+A modern JavaScript/TypeScript and Go/Ebiten migration of the classic Visual Basic 6.0 avoidance game, featuring authentic gameplay and original graphics.
 
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![HTML5](https://img.shields.io/badge/HTML5-Canvas-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-Styling-blue.svg)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![Go](https://img.shields.io/badge/Go-1.22+-blue.svg)](https://go.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## 📖 About
@@ -41,6 +42,43 @@ The game now includes robust error handling:
 - **Bounds Checking**: Array access is protected against out-of-bounds errors
 - **Division Safety**: Mathematical operations are protected against division by zero
 - **Graceful Degradation**: Fallback rendering when sprites fail to load
+
+## 🟢 Go/Ebiten Version (Native Desktop)
+
+A faithful Go/Ebiten port with full feature parity:
+- 8-directional movement, sprite poses, projectiles
+- Score/FPS display, game over detection
+- Sound effects (`hit.wav`), background music (`bgm.wav`)
+- Red flash visual effect on game over
+- Keyboard controls (arrows, SPACE, ESC)
+
+See [GoVersion/README.md](GoVersion/README.md) for full details and build instructions.
+
+### Quickstart (Go/Ebiten)
+```sh
+cd GoVersion
+# (Optional: generate sound files)
+go run gen_beep.go
+go run gen_bgm.go
+# Run the game
+go run main.go
+```
+
+## 📝 Feature Comparison Table
+| Feature                | VB6 | JS/TS | Go/Ebiten |
+|------------------------|:---:|:-----:|:---------:|
+| 8-way movement         | ✔️  | ✔️    | ✔️        |
+| Sprites/poses          | ✔️  | ✔️    | ✔️        |
+| Projectiles            | ✔️  | ✔️    | ✔️        |
+| Score/FPS display      | ✔️  | ✔️    | ✔️        |
+| Game over detection    | ✔️  | ✔️    | ✔️        |
+| Sound effects          | ✔️  | ❌    | ✔️        |
+| Background music       | ✔️  | ❌    | ✔️        |
+| Visual effects (flash) | ✔️  | ✔️    | ✔️        |
+| High score             | ❓  | ❌    | ❌        |
+| Title screen           | ❓  | ❌    | ❌        |
+| Pause                  | ❓  | ❌    | ❌        |
+| Mobile/gamepad         | ❌  | ❌    | ❌        |
 
 ## 🚀 Quick Start
 
@@ -187,90 +225,3 @@ const customSprite = new Image();
 customSprite.src = 'assets/custom-sprite.png';
 this.ctx.drawImage(customSprite, x, y, width, height);
 ```
-
-### Adding Sound Effects
-
-```javascript
-// Create audio context
-const audioContext = new AudioContext();
-
-// Play sound effect
-function playSound(frequency, duration) {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = frequency;
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration);
-}
-```
-
-## 🐛 Bug Reports
-
-If you encounter any issues, please check:
-
-1. **Browser Console**: Open developer tools (F12) and check for errors
-2. **Canvas Support**: Ensure your browser supports HTML5 Canvas
-3. **JavaScript Enabled**: Make sure JavaScript is enabled in your browser
-4. **File Permissions**: Ensure all game files are accessible
-
-## 📈 Future Enhancements
-
-- [ ] **Mobile Support**: Touch controls for mobile devices
-- [ ] **Online Leaderboards**: Save scores to cloud
-- [ ] **Power-ups**: Special abilities and items
-- [ ] **Multiple Levels**: Different difficulty modes
-- [ ] **Sound Effects**: Audio feedback for actions
-- [ ] **Particle Effects**: Visual enhancements
-- [ ] **Progressive Web App**: Offline support
-- [ ] **Multiplayer**: Real-time multiplayer gameplay
-- [ ] **Performance Monitoring**: Real-time performance metrics
-- [ ] **Accessibility**: Screen reader support and keyboard navigation
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Code Quality Standards
-
-- **Error Handling**: All new code must include proper error handling
-- **Type Safety**: TypeScript version should maintain strict type checking
-- **Bounds Checking**: Array access must include bounds validation
-- **Performance**: New features should not impact frame rate
-- **Testing**: Test on multiple browsers and devices
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Original VB6 Game**: Created by the original developer
-- **HTML5 Canvas**: For modern web graphics
-- **JavaScript Community**: For excellent documentation and tools
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. **Check** the browser console for error messages
-2. **Review** the [Issues](../../issues) page
-3. **Create** a new issue with detailed information
-
----
-
-**Enjoy the game!** 🎮
-
-*Built with ❤️ using modern web technologies* 
