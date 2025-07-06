@@ -54,6 +54,14 @@ class AvoidanceGame {
         // Input handling (replacing VB6 GetAsyncKeyState)
         this.keys = {};
         
+        // New for red flash effect
+        this.flashTimer = 0;
+        
+        // Audio
+        this.bgm = new Audio('assets/bgm.wav');
+        this.bgm.loop = true;
+        this.hitSound = new Audio('assets/hit.wav');
+        
         console.log('Game constructor called');
         this.loadSprites();
         this.setupInput();
@@ -144,12 +152,21 @@ class AvoidanceGame {
             gameOverElement.style.display = 'none';
         }
         
+        this.flashTimer = 0;
+        if (this.bgm) {
+            this.bgm.currentTime = 0;
+            this.bgm.play();
+        }
+        
         console.log('Game started successfully');
     }
     
     endGame() {
         this.gameRunning = false;
         this.endFlag = true;
+        if (this.bgm) {
+            this.bgm.pause();
+        }
     }
     
     // Replace VB6 MyMove()
@@ -300,6 +317,13 @@ class AvoidanceGame {
                 // Check collision with player
                 if (this.checkCollision(proj)) {
                     this.gameOver();
+                    // Play hit sound
+                    if (this.hitSound) {
+                        this.hitSound.currentTime = 0;
+                        this.hitSound.play();
+                    }
+                    // Red flash for 0.3s (assume 60 FPS)
+                    this.flashTimer = 18;
                     return;
                 }
                 
@@ -339,9 +363,16 @@ class AvoidanceGame {
     
     // Replace VB6 MyShow() and ShotShow()
     render() {
-        // Clear canvas (replacing VB6 Cls)
-        this.ctx.fillStyle = '#000000';
-        this.ctx.fillRect(0, 0, this.CRT_WIDTH, this.CRT_HEIGHT);
+        // Red flash effect
+        if (this.flashTimer > 0) {
+            this.ctx.fillStyle = 'rgb(255,0,0)';
+            this.ctx.fillRect(0, 0, this.CRT_WIDTH, this.CRT_HEIGHT);
+            this.flashTimer--;
+        } else {
+            // Clear canvas (replacing VB6 Cls)
+            this.ctx.fillStyle = '#000000';
+            this.ctx.fillRect(0, 0, this.CRT_WIDTH, this.CRT_HEIGHT);
+        }
         
         // Draw player (replacing BitBlt)
         this.drawPlayer();
