@@ -1,0 +1,28 @@
+{
+  "name": "avoidance-game",
+  "version": "1.0.0",
+  "description": "Modern JavaScript migration of the original VB6 avoidance game",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8080 -o",
+    "dev": "live-server --port=8080",
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "keywords": [
+    "game",
+    "javascript",
+    "canvas",
+    "html5",
+    "arcade",
+    "avoidance"
+  ],
+  "author": "Game Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {}
+} 
